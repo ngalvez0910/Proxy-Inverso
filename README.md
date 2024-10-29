@@ -1,18 +1,26 @@
 # Proxy-Inverso
 
-## NATALIA.COM
-
-Creamos una carpeta “conf” donde metemos el fichero nginx.conf de nuestro sistema de Linux.
+Creamos una carpeta “proxy” donde metemos dos carpetas:
+* conf: donde metemos el fichero nginx.conf de nuestro sistema de Linux.
+* certs: donde metemos los ficheros del certificado y la clave de nuestra página segura.
 
 <img src="imgs/conf.png">
  
-Creamos el directorio sites-available, donde se guardan todos los archivos de configuración de los sitios disponibles para Nginx.
+Creamos el directorio nginx, donde creamos los directorios:
+* sites-available: donde se guardan todos los archivos de configuración de los sitios disponibles para Nginx.
+ En este caso, solo tenemos el archivo default.
+* website: donde creamos la estructura básica del sitio web para natalia.com en una carpeta "natalia.com" y el index.html por defecto.
 
 <img src="imgs/sites-natalia.png">
- 
-Creamos la estructura básica del sitio web para natalia.com en una carpeta websites. Cuenta con una página principal (index.html) que los usuarios verán al ingresar al dominio, y una página personalizada de error 404 (error404.html).
 
 <img src="imgs/websites-natalia.png">
+
+Creamos el directorio apache, donde creamos los directorios:
+* htpasswd: donde metemos el fichero de la contraseña
+* sites-available: donde se guardan todos los archivos de configuración de los sitios disponibles para Nginx.
+ En este caso, solo tenemos el archivo 000-default.conf.
+* website: donde creamos la estructura básica del sitio web para natalia.com en una carpeta "natalia.com" y el index.html por defecto.
+
  
 En el archivo natalia.conf, debemos configurar varios parámetros para nuestro servidor web.
 1.	listen: especifica el puerto en el que se ejecutará el sitio web.
@@ -32,13 +40,6 @@ Creamos un fichero docker-compose. Debe de lucir de la siguiente forma:
 Debemos tener una carpeta scripts con nuestro fichero entrypoint.sh
 
 <img src="imgs/scripts.png">
- 
-En nuestro entrypoint.sh debemos añadir los siguientes comandos para automatizar la creación de nuestro servicio con su configuración. 
-1.	ln -s: crea enlaces simbólicos de los archivos de configuración de sites-available a sites-enabled.
-2.  nginx -s reload: recarga la configuración de Nginx.
-3.  nginx -g 'daemon off;': inicia Nginx en primer plano.
-
-<img src="imgs/entrypoint-natalia.png">
  
 En nuestro fichero hosts debemos añadir nuestro dominio con la IP de nuestro localhost.
  
